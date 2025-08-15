@@ -1,0 +1,164 @@
+// ======= Основные переменные =======
+$max-table-width: 800px;
+$table-padding: 12px 20px;
+$table-font-size: 1.1em;
+$table-border-color: #ccc;
+$table-header-bg: #f5f5f5;
+
+// ======= Статусы =======
+$status-active-bg: green;
+$status-active-color: white;
+$status-blocked-bg: crimson;
+$status-blocked-color: white;
+$status-padding: 4px 16px;
+$status-radius: 4px;
+
+// ======= Кнопки =======
+$button-padding: 6px 14px;
+$button-font-size: 1em;
+$button-border-radius: 4px;
+$button-bg: #f5f5f5;
+$button-hover-bg: #e0e0e0;
+$button-border-color: #888;
+
+// Кнопка удалить
+$delete-btn-bg: #ffeaea;
+$delete-btn-color: #c00;
+$delete-btn-border: #c00;
+$delete-btn-hover-bg: #ffd6d6;
+
+// Кнопка редактировать
+$edit-btn-bg: #eafbe7;
+$edit-btn-color: #256029;
+$edit-btn-border: #4CAF50;
+$edit-btn-font-weight: bold;
+$edit-btn-hover-bg: #d2f5c9;
+$edit-btn-hover-color: #1b3c1d;
+$edit-btn-hover-border: #388e3c;
+
+// Кнопки фильтрации
+$filter-btn-bg: #f5f5f5;
+$filter-btn-active-bg: #d0e7ff;
+$filter-btn-border: #0077c2;
+$filter-btn-radius: 4px;
+$filter-btn-padding: 6px 16px;
+$filter-btn-margin: 0 4px 0 0;
+
+// ======= Стили =======
+.MobileCompany-table {
+  width: 100%;
+  max-width: $max-table-width;
+  border-collapse: collapse;
+  margin-top: 16px;
+  margin-bottom: 16px;
+}
+
+.MobileCompany-table th,
+.MobileCompany-table td {
+  border: 1px solid $table-border-color;
+  padding: $table-padding;
+  text-align: left;
+  font-size: $table-font-size;
+}
+
+.MobileCompany-table th {
+  background: $table-header-bg;
+  font-weight: bold;
+}
+
+.status-active {
+  background-color: $status-active-bg;
+  color: $status-active-color;
+  padding: $status-padding;
+  border-radius: $status-radius;
+  display: inline-block;
+}
+
+.status-blocked {
+  background-color: $status-blocked-bg;
+  color: $status-blocked-color;
+  padding: $status-padding;
+  border-radius: $status-radius;
+  display: inline-block;
+}
+
+.MobileCompany-table button {
+  padding: $button-padding;
+  font-size: $button-font-size;
+  border: 1px solid $button-border-color;
+  border-radius: $button-border-radius;
+  background: $button-bg;
+  cursor: pointer;
+  margin-right: 8px;
+  transition: background 0.2s;
+}
+
+.MobileCompany-table button:hover {
+  background: $button-hover-bg;
+}
+
+.MobileCompany-table button:last-child {
+  margin-right: 0;
+}
+
+.MobileCompany-table .delete-btn {
+  background: $delete-btn-bg;
+  color: $delete-btn-color;
+  border: 1px solid $delete-btn-border;
+}
+
+.MobileCompany-table .delete-btn:hover {
+  background: $delete-btn-hover-bg;
+}
+
+.MobileCompany-table .edit-btn {
+  background: $edit-btn-bg;
+  color: $edit-btn-color;
+  border: 1px solid $edit-btn-border;
+  font-weight: $edit-btn-font-weight;
+}
+
+.MobileCompany-table .edit-btn:hover {
+  background: $edit-btn-hover-bg;
+  color: $edit-btn-hover-color;
+  border-color: $edit-btn-hover-border;
+}
+
+.filter-btn, .edit-btn {
+  background: $filter-btn-bg;
+  border: 1px solid $filter-btn-border;
+  border-radius: $filter-btn-radius;
+  padding: $filter-btn-padding;
+  margin: $filter-btn-margin;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background 0.2s;
+}
+
+.filter-btn:disabled {
+  background: $filter-btn-active-bg;
+  color: #333;
+  cursor: default;
+  border-color: #aaa;
+}
+
+.edit-input {
+  padding: 4px 8px;
+  font-size: 1em;
+  border: 1px solid #4CAF50;
+  border-radius: 4px;
+  margin-right: 4px;
+  max-width: 120px; 
+  box-sizing: border-box;
+}
+
+// Контейнер для кнопок в ячейке
+.button-group {
+  display: flex;
+  justify-content: space-between; // равномерно по ширине
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  padding-left: 0;
+  padding-right: 0; 
+}
