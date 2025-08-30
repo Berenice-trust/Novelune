@@ -11,6 +11,7 @@ const userRoutes = require("./server/routes/user");
 const { createGenresTable, seedGenres } = require("./server/models/genre");
 //const csurf = require('csurf'); // CSRF защита TODO, не успела настроить
 const helmet = require("helmet"); // Защита от XSS и других атак
+const cors = require('cors');
 
 // Переопределение JSON.stringify для обработки BigInt
 BigInt.prototype.toJSON = function () {
@@ -73,6 +74,14 @@ app.engine("hbs", hbs.engine);
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 
+
+app.use(cors({
+  origin: 'http://localhost:3000', // разрешить фронту обращаться к API
+  credentials: true               
+}));
+
+
+
 // Настраиваем middleware
 app.use(cookieParser());
 app.use(express.json());
@@ -90,6 +99,8 @@ app.use("/images", express.static(path.join(__dirname, "client/images")));
 // app.use(csurf({ cookie: true })); // CSRF защита, TODO
 // app.use(helmet());
 app.use(limiter);
+
+
 
 // Настройка Helmet в зависимости от окружения, а то пытался работыть в https
 if (process.env.NODE_ENV === "development") {
