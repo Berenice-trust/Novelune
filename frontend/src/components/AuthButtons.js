@@ -1,3 +1,6 @@
+import Link from 'next/link';
+
+
 export default function AuthButtons({ variant = "primary" }) {
   let loginClass = "button";
   let registerClass = "button secondary";
@@ -9,12 +12,12 @@ export default function AuthButtons({ variant = "primary" }) {
 
   return (
     <div className="auth-buttons">
-      <a href="/login" className={loginClass}>
+      <Link href="/login" className={loginClass}>
         Войти
-      </a>
-      <a href="/register" className={registerClass}>
+      </Link>
+      <Link href="/register" className={registerClass}>
         Регистрация
-      </a>
+      </Link>
     </div>
   );
 }

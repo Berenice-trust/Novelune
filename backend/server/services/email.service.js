@@ -21,8 +21,8 @@ async function sendVerificationEmail(to, username, token) {
   }
 
   // URL для активации аккаунта, реальная отправка
-  const activationUrl = `http://${process.env.HOST}:${process.env.PORT}/activate?token=${token}`;
-
+  //const activationUrl = `http://${process.env.HOST}:${process.env.PORT}/activate?token=${token}`;
+  const activationUrl = `${process.env.FRONTEND_URL}/activate?token=${token}`;
 
   // Тема письма
   const subject = "Подтверждение регистрации на Novelune";

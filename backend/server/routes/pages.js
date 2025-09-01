@@ -14,6 +14,7 @@ const optionalAuth = require('../middleware/optionalAuth');
 const Image = require('../models/image');
 const fs = require('fs');
 
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
 
 // Middleware для проверки авторизации
 const auth = require('../middleware/auth');
@@ -33,70 +34,46 @@ router.get('/', optionalAuth, async (req, res) => {
   if (req.user) {
     user = await User.findUserById(req.user.id);
   }
-  res.render('pages/home', {
-    title: 'Главная страница',
-    metaDescription: 'Novelune - литературная платформа для публикации и чтения произведений',
-    metaKeywords: 'книги, чтение, публикация, авторы',
-    user
-  });
+  res.redirect(`${FRONTEND_URL}/home`);
 });
 
 // Страница входа
 router.get('/login', (req, res) => {
-  res.render('pages/login', {
-    title: 'Вход в систему',
-    metaDescription: 'Вход в личный кабинет Novelune'
-  });
+  res.redirect(`${FRONTEND_URL}/login`);
 });
 
 // Страница регистрации
 router.get('/register', (req, res) => {
-  res.render('pages/register', {
-    title: 'Регистрация',
-    metaDescription: 'Регистрация нового автора на Novelune'
-  });
+  res.redirect(`${FRONTEND_URL}/register`);
 });
 
 // Тестовый маршрут для проверки шаблонизатора
 router.get('/test', (req, res) => {
-  res.render('pages/test', {
-    title: 'Тест шаблонизатора',
-    message: 'Handlebars успешно настроен!'
-  });
+  res.redirect(`${FRONTEND_URL}/test`);
 });
 
 // Страница личного кабинета
 // router.get('/dashboard', auth, (req, res) => {
-//   res.render('pages/dashboard', {
-//     title: 'Личный кабинет',
-//     user: req.user
-//   });
+//   res.redirect(`${FRONTEND_URL}/dashboard`);
 // });
 router.get('/dashboard', auth, async (req, res) => {
   const user = await User.findUserById(req.user.id);
   // Получаем книги автора, сортировка по дате создания (новые сверху)
   const books = await Book.getAllBooks({ authorId: req.user.id, limit: 100, offset: 0 });
-  res.render('pages/dashboard', { user, books });
+  res.redirect(`${FRONTEND_URL}/dashboard`);
 });
 
 // Страница активации
 router.get('/activate', (req, res) => {
-  res.render('pages/activate', {
-    title: 'Активация аккаунта'
-  });
+  res.redirect(`${FRONTEND_URL}/activate`);
 });
 
 // Форма создания книги
 router.get('/books/new', auth, async (req, res) => {
   const genres = await Genre.getAllGenres();
-   const user = await User.findUserById(req.user.id); 
-  //console.log('genres:', genres); // Проверяем, что в genres  
-  res.render('pages/book-new', {
-    title: 'Создать книгу',
-    genres,
-    genresJson: JSON.stringify(genres || []),
-    user
-  });
+   const user = await User.findUserById(req.user.id);
+  //console.log('genres:', genres); // Проверяем, что в genres
+  res.redirect(`${FRONTEND_URL}/books/new`);
 });
 
 // Обработка создания книги
@@ -144,10 +121,7 @@ router.post('/books/new', auth, upload.single('cover_image'), async (req, res) =
     res.redirect(`/books/${newBook.id}`);
   } catch (err) {
     console.error(err);
-    res.render('pages/book-new', {
-      title: 'Создать книгу',
-      error: 'Ошибка при создании книги. Попробуйте ещё раз.'
-    });
+    res.redirect(`${FRONTEND_URL}/books/new`);
   }
 });
 
@@ -171,12 +145,7 @@ router.get('/books/:bookId/chapters/new', auth, async (req, res) => {
     const { bookId } = req.params;
     const user = await User.findUserById(req.user.id);
     const nextChapterId = await getNextChapterId();
-    res.render('pages/chapter-new', {
-      title: 'Добавить главу',
-      bookId,
-      user,
-      nextChapterId
-    });
+    res.redirect(`${FRONTEND_URL}/books/${bookId}/chapters/new`);
   } catch (err) {
     // TODO: обработка ошибок
     console.error(err);
@@ -187,15 +156,8 @@ router.get('/books/:id', auth, async (req, res) => {
   const book = await Book.getBookById(req.params.id);
  const chapters = await Chapter.getBookChapters(req.params.id);
  const user = await User.findUserById(req.user.id);
-   const genres = await Genre.getAllGenres(); 
-  res.render('pages/book-detail', {
-    title: book.title,
-    book,
-    chapters,
-    user,
-    genres,
-    genresJson: JSON.stringify(genres || [])
-  });
+   const genres = await Genre.getAllGenres();
+  res.redirect(`${FRONTEND_URL}/books/${req.params.id}`);
 });
 
 router.post('/books/:bookId/chapters/new', auth, async (req, res) => {
@@ -255,14 +217,9 @@ router.get('/books/:bookId/chapters/:chapterId/edit', auth, async (req, res) => 
   const user = await User.findUserById(req.user.id);
   const chapter = await Chapter.getChapterById(chapterId);
   if (!chapter) {
-    return res.status(404).render('pages/404', { title: 'Глава не найдена', user });
+    return res.redirect(`${FRONTEND_URL}/404`);
   }
-  res.render('pages/chapter-edit', {
-    title: 'Редактировать главу',
-    bookId,
-    chapter,
-    user
-  });
+  res.redirect(`${FRONTEND_URL}/books/${bookId}/chapters/${chapterId}/edit`);
 });
 
 // Обработка редактирования главы
@@ -351,14 +308,9 @@ router.post('/api/images/upload', auth, imageUpload.single('file'), async (req, 
 //   const genres = await Genre.getAllGenres();
 //   const user = await User.findUserById(req.user.id);
 //   if (!book) {
-//     return res.status(404).render('pages/404', { title: 'Книга не найдена', user });
+//     return res.redirect(`${FRONTEND_URL}/404`);
 //   }
-//   res.render('pages/book-edit', {
-//     title: 'Редактировать книгу',
-//     book,
-//     genres,
-//     user
-//   });
+//   res.redirect(`${FRONTEND_URL}/books/${book.id}/edit`);
 // });
 
 // POST /books/:id/edit — обработка формы
@@ -458,19 +410,13 @@ router.get('/books', optionalAuth, async (req, res) => {
     user = await User.findUserById(req.user.id);
   }
 
-  res.render('pages/books-list', {
-    title: 'Все книги',
-    books,
-    genres,
-    filters: { genre_id, subgenre_id, author, q, sort },
-    user
-  });
+  res.redirect(`${FRONTEND_URL}/books`);
 });
 
 router.get('/books/:id/view', optionalAuth, async (req, res) => {
   const book = await Book.getBookById(req.params.id);
   if (!book) {
-    return res.status(404).render('pages/404', { title: 'Книга не найдена' });
+    return res.redirect(`${FRONTEND_URL}/404`);
   }
   const chapters = await Chapter.getBookChapters(req.params.id);
 
@@ -479,12 +425,7 @@ router.get('/books/:id/view', optionalAuth, async (req, res) => {
     user = await User.findUserById(req.user.id);
   }
 
-  res.render('pages/book-detail-public', {
-    title: book.title,
-    book,
-    chapters,
-    user
-  });
+  res.redirect(`${FRONTEND_URL}/books/${book.id}`);
 });
 
 
@@ -493,7 +434,7 @@ router.get('/books/:bookId/chapters/:chapterId/read', optionalAuth, async (req, 
   const book = await Book.getBookById(bookId);
   const chapter = await Chapter.getChapterById(chapterId);
   if (!book || !chapter) {
-    return res.status(404).render('pages/404', { title: 'Глава не найдена' });
+    return res.redirect(`${FRONTEND_URL}/404`);
   }
 
   let user = null;
@@ -501,12 +442,7 @@ router.get('/books/:bookId/chapters/:chapterId/read', optionalAuth, async (req, 
     user = await User.findUserById(req.user.id);
   }
 
-  res.render('pages/chapter-read', {
-    title: `${book.title} — Глава ${chapter.chapter_number}`,
-    book,
-    chapter,
-    user
-  });
+  res.redirect(`${FRONTEND_URL}/books/${book.id}/chapters/${chapter.id}/read`);
 });
 
 

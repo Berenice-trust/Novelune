@@ -1,4 +1,5 @@
 import AuthButtons from './AuthButtons';
+import Link from 'next/link';
 
 export default function Header() {
   const user = null; // или объект пользователя, если авторизован
@@ -7,7 +8,7 @@ export default function Header() {
     <header>
       <div className="container">
         <h1>
-          <a href="/">Novelune</a>
+          <Link href="/">Novelune</Link>
         </h1>
         <p>Платформа для публикации и чтения литературных произведений</p>
 
@@ -18,9 +19,9 @@ export default function Header() {
                 <span>
                   {user.display_name ? user.display_name : user.username}
                 </span>
-                <a href="/dashboard" className="button header-cabinet-btn">
+                <Link href="/dashboard" className="button header-cabinet-btn">
                   Личный кабинет
-                </a>
+                </Link>
                 <button id="logoutBtn" className="button third">
                   Выйти
                 </button>
@@ -29,9 +30,9 @@ export default function Header() {
               <AuthButtons variant="header" />
             )}
           </div>
-          <a href="/books" className="button header-cabinet-btn auth-nav-books-btn">
+          <Link href="/books" className="button header-cabinet-btn auth-nav-books-btn">
             Все книги
-          </a>
+          </Link>
         </div>
       </div>
     </header>

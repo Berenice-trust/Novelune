@@ -199,6 +199,7 @@ footer {
 /* Стили для форм авторизации */
 .auth-section {
   max-width: 500px;
+    width: 100%;
   margin: 40px auto;
   text-align: center;
 }
@@ -210,32 +211,44 @@ footer {
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
   margin: 20px auto;
   text-align: left;
+  max-width: 500px;
+  width: 100%;  
 }
 
 .form-group {
   margin-bottom: 20px;
   position: relative;
+  text-align: left;
 }
-
 .form-group label {
   display: block;
   font-weight: 600;
   margin-bottom: 8px;
 }
-
-.form-group input {
+.form-group input,
+.form-group textarea {
   width: 100%;
   padding: 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 16px;
+  background: #f8fafc;
+  color: #222;
 }
 
-.error-text {
+.error-text, .error {
   color: #c62828;
   font-size: 12px;
   margin-top: 5px;
   display: block;
+}
+
+.success {
+  color: #2e7d32;
+  font-size: 16px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
 .form-actions {
@@ -420,24 +433,6 @@ footer {
   font-size: 1.2rem;
 }
 
-.form-group {
-  margin-bottom: 16px;
-  text-align: left;
-}
-.form-group label {
-  display: block;
-  font-weight: 500;
-  margin-bottom: 6px;
-}
-.form-group input,
-.form-group textarea {
-  width: 100%;
-  padding: 8px 10px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  font-size: 1em;
-  background: #f8fafc;
-}
 .profile-note {
   display: block;
   font-size: 0.9em;

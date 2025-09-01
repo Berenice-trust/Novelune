@@ -7,6 +7,8 @@ const User = require('../models/user');
 
 const router = express.Router();
 
+const FRONTEND_URL = process.env.FRONTEND_URL || "http://localhost:3000";
+
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: { fileSize: 10 * 1024 * 1024 },
@@ -29,7 +31,7 @@ router.post('/upload', auth, upload.single('image'), async (req, res) => {
     // Обновляем путь в БД
     await User.updateAvatarUrl(userId, avatarUrl);
 
-    res.redirect('/dashboard');
+    res.redirect(`${FRONTEND_URL}/dashboard`);
   } catch (err) {
     console.error('Ошибка загрузки аватара:', err);
     res.status(500).send('Ошибка загрузки аватара');

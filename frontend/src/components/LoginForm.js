@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import Link from 'next/link';
 
 export default function LoginForm() {
   const [login, setLogin] = useState("");
@@ -57,8 +58,8 @@ export default function LoginForm() {
         </div>
       </form>
       <div className="auth-links">
-        <p>Еще нет аккаунта? <a href="/register">Зарегистрироваться</a></p>
-        <p><a href="/">Вернуться на главную</a></p>
+        <p>Еще нет аккаунта? <Link href="/register">Зарегистрироваться</Link></p>
+        <p><Link href="/">Вернуться на главную</Link></p>
       </div>
     </section>
   );

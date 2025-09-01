@@ -7,11 +7,9 @@ export default function HomePage() {
 
   return (
     <>
-      <Header />
       <main>
         <WelcomeSection user={user} />
       </main>
-      <Footer />
     </>
   );
-}
+} 

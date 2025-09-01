@@ -6,6 +6,8 @@ const { query } = require("../config/database");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 
+
+
 router.post("/register", async (req, res) => {
   try {
     // Получаем данные из запроса
@@ -55,12 +57,16 @@ router.post("/register", async (req, res) => {
   }
 });
 
-router.get("/activate/:token", async (req, res) => {
+router.get("/activate", async (req, res) => {
+  const { token } = req.query;
+  if (!token) {
+    return res.status(400).json({
+      success: false,
+      message: "Токен не передан",
+    });
+  }
   try {
-    const { token } = req.params;
-
     await User.activateUser(token);
-
     res.status(200).json({
       success: true,
       message: "Аккаунт успешно активирован!",
