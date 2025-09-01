@@ -44,4 +44,29 @@ router.post('/profile', auth, async (req, res) => {
   }
 });
 
+// получение пользователя
+router.get('/me', auth, async (req, res) => {
+  try {
+    // req.user формируется в middleware/auth.js
+    const user = await User.getById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'Пользователь не найден' });
+    }
+    // Вернуть только нужные поля!
+    res.json({
+      success: true,
+      user: {
+        id: user.id,
+        username: user.username,
+        nickname: user.display_name,
+        email: user.email,
+        about: user.bio,
+        avatar: user.avatar // если есть поле
+      }
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: 'Ошибка получения пользователя' });
+  }
+});
+
 module.exports = router;
