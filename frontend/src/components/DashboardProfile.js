@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from 'next/image';
 
 export default function DashboardProfile({ user }) {
   // Можно добавить обработчик onError только если компонент точно клиентский
@@ -9,11 +10,13 @@ export default function DashboardProfile({ user }) {
       <div className="welcome-flex">
         <div className="dashboard-avatar-block">
           <div className="avatar-rect" style={{ position: "relative" }}>
-            <img
+            <Image
               src={user.avatarUrl}
               alt="Аватар"
               className="avatar-img"
               onError={e => { e.target.src = "/default-avatar.png"; }}
+              width={100}
+              height={100}
             />
             <span className="avatar-text">Кликните, чтобы загрузить аватар</span>
           </div>

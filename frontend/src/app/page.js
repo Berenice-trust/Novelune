@@ -1,15 +1,13 @@
-// import Header from '../components/Header';
-// import Footer from '../components/Footer';
+"use client";
 import WelcomeSection from '../components/WelcomeSection';
+import { useUser } from '../hooks/useUser';
 
 export default function HomePage() {
-  const user = null; // или объект пользователя, если авторизован
+  const { user, loading } = useUser();
 
   return (
-    <>
-      <main>
-        <WelcomeSection user={user} />
-      </main>
-    </>
+    <main>
+       <WelcomeSection user={user} loading={loading} />
+    </main>
   );
-} 
+}

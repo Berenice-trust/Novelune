@@ -47,8 +47,10 @@ router.post('/profile', auth, async (req, res) => {
 // получение пользователя
 router.get('/me', auth, async (req, res) => {
   try {
+    console.log('GET /me - req.user:', req.user); // TODO убрать логирование
     // req.user формируется в middleware/auth.js
-    const user = await User.getById(req.user.id);
+    const user = await User.findUserById(req.user.id);
+    console.log('GET /me - found user:', user); // TODO убрать логирование
     if (!user) {
       return res.status(404).json({ success: false, message: 'Пользователь не найден' });
     }
@@ -61,10 +63,11 @@ router.get('/me', auth, async (req, res) => {
         nickname: user.display_name,
         email: user.email,
         about: user.bio,
-        avatar: user.avatar // если есть поле
+        avatar: user.avatar_url // исправлено на avatar_url
       }
     });
   } catch (err) {
+    console.error('GET /me - error:', err); // Добавил логирование ошибки
     res.status(500).json({ success: false, message: 'Ошибка получения пользователя' });
   }
 });
