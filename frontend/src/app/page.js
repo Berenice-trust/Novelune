@@ -1,5 +1,5 @@
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+// import Header from '../components/Header';
+// import Footer from '../components/Footer';
 import WelcomeSection from '../components/WelcomeSection';
 
 export default function HomePage() {
