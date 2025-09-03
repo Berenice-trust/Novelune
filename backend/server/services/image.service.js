@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const sharp = require('sharp');
 
-const AVATAR_DIR = path.join(__dirname, '../../client/uploads/avatars');
+const AVATAR_DIR = path.join(__dirname, '../../uploads/avatars');
 
 function getAvatarPaths(userId) {
   return {

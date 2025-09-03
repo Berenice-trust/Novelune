@@ -22,6 +22,7 @@ export async function GET() {
       ...data.user,
       display_name: data.user.nickname,
       avatarUrl: data.user.avatar,
+  bio: data.user.bio || "",
     }
   : null;
   return Response.json({ user });

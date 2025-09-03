@@ -93,7 +93,7 @@ app.use("/js", express.static(path.join(__dirname, "client/js")));
 app.use("/api/auth", authRoutes);
 app.use("/api/avatar", avatarRoutes);
 app.use("/api/user", userRoutes);
-app.use("/uploads", express.static(path.join(__dirname, "client/uploads")));
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/images", express.static(path.join(__dirname, "client/images")));
 
 // app.use(csurf({ cookie: true })); // CSRF защита, TODO

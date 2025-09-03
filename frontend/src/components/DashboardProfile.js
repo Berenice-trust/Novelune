@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
-import Image from 'next/image';
+// import Image from 'next/image';
+import AvatarUpload from "./AvatarUpload";
 import EditProfileModal from "./EditProfileModal";
 import { useState } from "react";
 import DeleteAccountModal from "./DeleteAccountModal";
@@ -32,15 +33,7 @@ export default function DashboardProfile({ user }) {
       <div className="welcome-flex">
         <div className="dashboard-avatar-block">
           <div className="avatar-rect" style={{ position: "relative" }}>
-            <Image
-              src={user.avatarUrl}
-              alt="Аватар"
-              className="avatar-img"
-              onError={e => { e.target.src = "/default-avatar.png"; }}
-              width={100}
-              height={100}
-            />
-            <span className="avatar-text">Кликните, чтобы загрузить аватар</span>
+            <AvatarUpload currentAvatarUrl={user.avatarUrl || "/default-avatar.png"} />
           </div>
         </div>
         <div className="welcome-info">
@@ -75,7 +68,7 @@ export default function DashboardProfile({ user }) {
             </div>
             <div className="profile-row">
               <span className="profile-label">О себе:</span>
-              <span className="profile-value">{user.about}</span>
+              <span className="profile-value">{user.bio}</span>
             </div>
           </div>
           <div className="dashboard-actions">

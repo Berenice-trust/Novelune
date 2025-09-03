@@ -31,13 +31,13 @@ router.post('/profile', auth, async (req, res) => {
     
 // TODO: письмло с подтверждением email, если email изменен
 
-   await User.updateProfile(
-      req.user.id,
-      req.body.display_name,
-      req.body.email,
-      req.body.bio,
-      req.body.new_password // undefined если не меняется
-    );
+  await User.updateProfile(
+    req.user.id,
+    req.body.display_name,
+    req.body.email,
+    req.body.bio,
+    req.body.new_password // undefined если не меняется
+   );
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ success: false, message: 'Ошибка обновления профиля' });
@@ -62,7 +62,7 @@ router.get('/me', auth, async (req, res) => {
         username: user.username,
         nickname: user.display_name,
         email: user.email,
-        about: user.bio,
+  bio: user.bio,
         avatar: user.avatar_url // исправлено на avatar_url
       }
     });

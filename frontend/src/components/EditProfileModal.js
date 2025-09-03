@@ -5,7 +5,7 @@ export default function EditProfileModal({ user, open, onClose }) {
   const [form, setForm] = useState({
     display_name: "",
     email: "",
-    bio: "",
+    bio: user.bio || "",
     new_password: "",
     repeat_password: "",
   });
