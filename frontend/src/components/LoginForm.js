@@ -1,15 +1,24 @@
 "use client";
 import { useState } from "react";
 import Link from 'next/link';
+import { validators } from "../utils/validation";
 
 export default function LoginForm() {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [fieldErrors, setFieldErrors] = useState({ login: "", password: "" });
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    // Валидация логина и пароля
+    const loginError = login.includes("@")
+      ? validators.email.validate(login)
+      : validators.username.validate(login);
+    const passwordError = !password ? "Пароль обязателен" : "";
+    setFieldErrors({ login: loginError || "", password: passwordError });
+    if (loginError || passwordError) return;
     try {
       const res = await fetch("/api/auth/login", {
         method: "POST",
@@ -28,6 +37,22 @@ export default function LoginForm() {
     }
   };
 
+  // onBlur-валидация для логина
+  const handleLoginBlur = (e) => {
+    const value = e.target.value;
+    const loginError = value.includes("@")
+      ? validators.email.validate(value)
+      : validators.username.validate(value);
+    setFieldErrors((prev) => ({ ...prev, login: loginError || "" }));
+  };
+
+  // onBlur-валидация для пароля
+  const handlePasswordBlur = (e) => {
+    const value = e.target.value;
+    const passwordError = !value ? "Пароль обязателен" : "";
+    setFieldErrors((prev) => ({ ...prev, password: passwordError }));
+  };
+
   return (
     <section className="auth-section">
       <h2>Вход в систему</h2>
@@ -39,8 +64,9 @@ export default function LoginForm() {
             type="text"
             value={login}
             onChange={e => setLogin(e.target.value)}
-            required
+            onBlur={handleLoginBlur}
           />
+          {fieldErrors.login && <div className="error-text">{fieldErrors.login}</div>}
         </div>
         <div className="form-group">
           <label htmlFor="passwordInput">Пароль</label>
@@ -49,8 +75,9 @@ export default function LoginForm() {
             type="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
-            required
+            onBlur={handlePasswordBlur}
           />
+          {fieldErrors.password && <div className="error-text">{fieldErrors.password}</div>}
         </div>
         {error && <div className="error-text">{error}</div>}
         <div className="form-actions">
