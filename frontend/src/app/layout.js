@@ -1,6 +1,5 @@
-import { Geist, Geist_Mono } from "next/font/google";
-import { Merriweather } from "next/font/google";
-import "./globals.css";
+import { Geist, Geist_Mono, Merriweather } from "next/font/google";
+import "../styles/styles.scss";
 import '../styles/styles.scss';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
