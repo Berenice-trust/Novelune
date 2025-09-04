@@ -1,30 +1,26 @@
 "use client";
 import AuthButtons from './AuthButtons';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useUser } from '../hooks/useUser';
 import Image from 'next/image';
 
-export default function Header({ initialUser }) {
-  const [user, setUser] = useState(initialUser);
-
-  useEffect(() => {
-    if (!user) {
-      fetch("/api/user/me")
-        .then(res => res.ok ? res.json() : null)
-        .then(data => {
-          if (data && data.user) setUser(data.user);
-        });
-    }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+export default function Header() {
+  const { user, loading, setUser } = useUser();
 
   const logoutHandler = async () => {
-    await fetch("/api/auth/logout", {
-      method: "POST",
-      credentials: "include",
-    });
-    setUser(null);
-    window.location.href = "/";
+    try {
+      await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+      setUser(null);
+      window.location.href = "/";
+    } catch (error) {
+      console.error("Ошибка выхода:", error);
+      // Даже при ошибке очищаем локальное состояние
+      setUser(null);
+      window.location.href = "/";
+    }
   };
 
   return (
@@ -37,7 +33,9 @@ export default function Header({ initialUser }) {
 
         <div className="auth-nav">
           <div className="auth-nav-main">
-            {user ? (
+            {loading ? (
+              <span>Загрузка...</span>
+            ) : user ? (
               <>
                 <span>
                   {user.display_name ? user.display_name : user.username}

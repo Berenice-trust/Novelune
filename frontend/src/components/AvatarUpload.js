@@ -41,7 +41,6 @@ export default function AvatarUpload({ currentAvatarUrl, onUpload }) {
     }
   };
 
-  const isDataUrl = preview.startsWith("data:");
   return (
     <div className="avatar-upload-block">
       <div className="avatar-rect" onClick={() => fileInputRef.current && fileInputRef.current.click()}>
@@ -59,11 +58,6 @@ export default function AvatarUpload({ currentAvatarUrl, onUpload }) {
         ref={fileInputRef}
         onChange={handleFileChange}
       />
-      {/* <div style={{ marginTop: 8 }}> */}
-        {/* <button type="button" className="button" onClick={() => fileInputRef.current && fileInputRef.current.click()} disabled={loading}>
-          {loading ? "Загрузка..." : "Загрузить аватар"}
-        </button> */}
-      {/* </div> */}
     </div>
   );
 }

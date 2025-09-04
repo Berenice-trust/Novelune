@@ -1,8 +1,9 @@
+"use client";
 import AuthButtons from './AuthButtons';
-// import { useUser } from './UserContext';
+import { useUser } from '../hooks/useUser';
 
-export default function WelcomeSection({ user }) {
-  console.log('WelcomeSection: received user =', user);
+export default function WelcomeSection() {
+  const { user } = useUser();
   
   return (
     <section className="welcome">

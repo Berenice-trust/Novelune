@@ -6,13 +6,23 @@ export function useUser() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/user/me')
-      .then(res => res.ok ? res.json() : { user: null })
+    fetch('/api/user/me', { credentials: 'include' })
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        } else if (res.status === 401) {
+          // Неавторизован - это нормально
+          return { user: null };
+        } else {
+          throw new Error('Network error');
+        }
+      })
       .then(data => {
         setUser(data.user);
         setLoading(false);
       })
-      .catch(() => {
+      .catch((error) => {
+        console.log('User fetch error:', error);
         setUser(null);
         setLoading(false);
       });
