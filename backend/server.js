@@ -76,8 +76,8 @@ app.set("views", path.join(__dirname, "views"));
 
 
 app.use(cors({
-  origin: 'http://localhost:3000', // разрешить фронту обращаться к API
-  credentials: true               
+  origin: ['http://5.187.3.57', 'http://localhost:3000'],
+  credentials: true,             
 }));
 
 
