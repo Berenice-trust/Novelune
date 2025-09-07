@@ -5,10 +5,12 @@ import EditProfileModal from "./EditProfileModal";
 import InfoSection from "./InfoSection";
 import ConfirmModal from "./ConfirmModal";
 import { useState } from "react";
+import { useUser } from "../hooks/useUser";
 
 export default function DashboardProfile({ user }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const { refetch } = useUser(); 
 
   const handleDeleteAccount = async () => {
     const res = await fetch("/api/user/delete", { method: "POST", credentials: "include" });
@@ -42,7 +44,10 @@ export default function DashboardProfile({ user }) {
         
         <div className="dashboard-avatar-block">
           <div className="avatar-rect" style={{ position: "relative" }}>
-            <AvatarUpload currentAvatarUrl={user.avatarUrl || "/default-avatar.png"} />
+                <AvatarUpload
+      currentAvatarUrl={user.avatarUrl || "/default-avatar.png"}
+      onUpload={refetch} // обновить пользователя после загрузки аватара
+    />
           </div>
         </div>
       </InfoSection>
