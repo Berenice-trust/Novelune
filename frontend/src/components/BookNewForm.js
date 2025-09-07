@@ -15,7 +15,7 @@ export default function BookNewForm() {
             <div className="book-cover-rect">
               <Image
                 id="coverPreview"
-                src="/images/default-cover.png"
+                src="/default-cover.png"
                 alt="Обложка"
                 className="book-cover-img"
                 width={200}
