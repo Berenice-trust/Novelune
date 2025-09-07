@@ -1,11 +1,13 @@
 "use client";
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 export function useUser() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  // Функция для ручного обновления пользователя
+  const fetchUser = useCallback(() => {
+    setLoading(true);
     fetch('/api/user/me', { credentials: 'include' })
       .then(res => {
         if (res.ok) {
@@ -28,5 +30,10 @@ export function useUser() {
       });
   }, []);
 
-  return { user, loading, setUser };
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
+  // Теперь возвращаем refetch для ручного обновления
+  return { user, loading, setUser, refetch: fetchUser };
 }
